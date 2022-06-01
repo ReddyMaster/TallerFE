@@ -1,0 +1,143 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header text-center">
+      <h4>Catálago Clientes</h4>
+    </div>
+
+    <div class="card-body">
+      <table class="table table-striped table-hover table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido 1</th>
+            <th scope="col">Apellido 2</th>
+            <th scope="col">Teléfono</th>
+            <th scope="col">Celular</th>
+            <th scope="col">Correo</th>
+            <th [colSpan]="2" class="text-center">
+              <button class="btn btn-primary btn-sm" (click)="onNuevo();" data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop">
+                <fa-icon [icon]="['fas','plus']"></fa-icon>
+              </button>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of clientes">
+            <th scope="row">{{item.idCliente}}</th>
+            <td>{{item.nombre}}</td>
+            <td>{{item.apellido1}}</td>
+            <td>{{item.apellido2}}</td>
+            <td>{{item.telefono}}</td>
+            <td>{{item.celular}}</td>
+            <td>{{item.correo}}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+                (click)="onEditar(item.id);">
+                <fa-icon [icon]="['fas','pen-to-square']"></fa-icon>
+              </button>
+            </td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-danger" (click)="onEliminar(item.id, item.nombre);">
+                <fa-icon [icon]="['fas','trash-can']"></fa-icon>
+              </button>
+            </td>
+          </tr>
+
+
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card-footer text-end">
+      <div>
+        <button class="btn btn-sm btn-outline-primary me-2" (click)="onFiltrar();">
+          <fa-icon [icon]="['fas','filter']"></fa-icon> Filtrar
+        </button>
+        <button class="btn btn-sm btn-outline-success me-2" (click)="onImprimir();">
+          <fa-icon [icon]="['fas','print']"></fa-icon> Imprimir
+        </button>
+        <button class="btn btn-sm btn-outline-danger" (click)="onCerrar();">
+          <fa-icon [icon]="['fas','power-off']"></fa-icon> Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Ventana del formulario -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">{{titulo}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="frmCliente" [formGroup]="frmCliente" (ngSubmit)="onGuardar();">
+          <div class="row mb-1">
+            <label for="idCliente" class="col-sm-3 col-form-label">ID Cliente</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="idCliente" class="form-control" id="idCliente" placeholder="ID Cliente">
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label for="nombre" class="col-sm-3 col-form-label">Nombre</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="nombre" class="form-control" id="nombre" placeholder="Nombre">
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label for="apellido1" class="col-sm-3 col-form-label">Apellido 1</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="apellido1" class="form-control" id="apellido1" placeholder="Apellido 1">
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label for="apellido2" class="col-sm-3 col-form-label">Apellido 2</label>
+            <div class="col-sm-9">
+              <input type="text" formControlName="apellido2" class="form-control" id="apellido2" placeholder="Apellido 2">
+            </div>
+          </div>
+          <div class="row mb-1">
+            <label for="telefono" class="col-sm-3 col-form-label">Telefono</label>
+            <div class="col-sm-9">
+              <div class="row">
+                <div class="col-sm-6">
+                  <input type="tel" formControlName="telefono" class="form-control" id="telefono" placeholder="Telefono">
+                </div>
+                <div class="col-sm-6">
+                  <input type="tel" formControlName="celular" class="form-control" id="celular" placeholder="Celular">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-1">
+            <label for="correo" class="col-sm-3 col-form-label">Correo</label>
+            <div class="col-sm-9">
+              <input type="email" formControlName="correo" class="form-control" id="correo" placeholder="Correo">
+            </div>
+          </div>
+          <div class="row">
+            <label for="direccion" class="col-sm-3 col-form-label">Dirección</label>
+            <div class="col-sm-9">
+              <textarea id="direccion" formControlName="direccion" class="form-control" placeholder="Direccion"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-outline-primary" form="frmCliente">
+          <fa-icon [icon]="['fas','save']"> </fa-icon> Guardar
+        </button>
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">
+          <fa-icon [icon]="['fas','xmark']"> </fa-icon> Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
